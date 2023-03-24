@@ -1,0 +1,52 @@
+{% extends 'shop/basic.html' %}
+
+{% block title%} Title of Index{% endblock %}
+{% block css%}
+
+{% endblock %}
+{% block body %}
+<div class="container my-3">
+{% for Products , range in allprods %}
+<h2 style="color:#fff" class="my-4 text-center">{{Products.0.category}}</h2>
+  <div class="row my-2 justify-content-center">
+    {% for i in Products %}
+    <div class="col-md-3 mx-4">
+      <div class="card" style="width: 20rem; height: 30rem;">
+        <img src="/media/{{i.image}}" height="250" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{i.product_name}}</h5>
+          <h5 class="card-text">Price</h4>
+          <p class="card-text">{{i.desc}}</p>
+          <button href="#" id="pr{{i.id}}" class="btn btn-primary cart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
+{% block js%}
+<script>
+  if(localStorage.getItem('cart') == null){
+    var cart = {};
+  }else{
+    cart = JSON.parse(localStorage.getItem('cart'));
+    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  }
+  $('.cart').click(function(){
+// console.log("clicked");
+var idstr = this.id.toString();
+// console.log(idstr);
+if(cart[idstr] != undefined){
+  cart[idstr] = cart[idstr] + 1;
+}else{
+  cart[idstr] = 1;
+}
+// console.log(cart);
+localStorage.setItem('cart',JSON.stringify(cart))
+  })
+</script>
+
+{% endblock%}
