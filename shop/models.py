@@ -13,3 +13,23 @@ class products(models.Model):
 
     def __str__(self):
         return self.product_name
+    
+class contact(models.Model):
+    msg_id = models.AutoField(primary_key=True)
+    c_name = models.CharField(max_length=50) 
+    email = models.CharField(max_length=50,default="")
+    desc = models.CharField(max_length=300,default="")
+    number = models.CharField(max_length=50,default="")
+
+    def __str__(self):
+        return self.c_name
+    
+class Contacts(models.Model):
+    msg_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50) 
+    email = models.CharField(max_length=50,default="")
+    desc = models.CharField(max_length=300,default="")
+    number = models.CharField(max_length=50,default="")
+
+    def __str__(self):
+        return self.name

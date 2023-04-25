@@ -7,7 +7,7 @@
 {% block body %}
 <div class="container my-3">
 {% for Products , range in allprods %}
-<h2 style="color:#fff" class="my-4 text-center">{{Products.0.category}}</h2>
+<h2 style="color:black" class="my-4 text-center">{{Products.0.category}}</h2>
   <div class="row my-2 justify-content-center">
     {% for i in Products %}
     <div class="col-md-3 mx-4">
@@ -16,10 +16,12 @@
         <div class="card-body">
           <h5 class="card-title">{{i.product_name}}</h5>
           <h5 class="card-text">Price</h4>
-          <p class="card-text">{{i.desc}}</p>
+          <p class="card-text">{{i.desc|slice:"0:30"}}...</p>
           <button href="#" id="pr{{i.id}}" class="btn btn-primary cart">Add to Cart</button>
+          <a href="/shop/product/{{i.id}}"> <button id="qv{{i.id}}" class="btn btn-primary cart">Quick View</button></a>
         </div>
       </div>
+      
     </div>
     {% endfor %}
   </div>
@@ -33,7 +35,7 @@
     var cart = {};
   }else{
     cart = JSON.parse(localStorage.getItem('cart'));
-    document.getElementById('cart').innerHTML = Object.keys(cart).length;
+    document.getElementById('cart').innerHTML = Object.keys(cart).length; 
   }
   $('.cart').click(function(){
 // console.log("clicked");
@@ -46,7 +48,11 @@ if(cart[idstr] != undefined){
 }
 // console.log(cart);
 localStorage.setItem('cart',JSON.stringify(cart))
+document.getElementById('cart').innerHTML = Object.keys(cart).length;
   })
+ 
+const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 </script>
 
 {% endblock%}
